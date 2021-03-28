@@ -8,10 +8,7 @@ def sleep(func):
     return wrapper
 
 
-@sleep
 
-def wakeup():
-    print("Get up! Your break is over.")
 
 
 wakeup()

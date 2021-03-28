@@ -129,18 +129,17 @@ dmypy.json
 # Pyre type checker
 .pyre/
 =======
-data/uniprot/ARATH_3702_idmapping.dat
-data/uniprot/CAEEL_6239_idmapping.dat
-data/uniprot/DANRE_7955_idmapping.dat
-data/uniprot/DROME_7227_idmapping.dat
-data/uniprot/ECOLI_83333_idmapping.dat
-data/uniprot/HUMAN_9606_idmapping.dat
-data/uniprot/SCHPO_284812_idmapping.dat
-data/uniprot/YEAST_559292_idmapping.dat
 
 # Images
 images/jpgImageDir
 images/pngImageDir
+
+# Python extra
 .idea/
+
+# Created files
+data/gamenames
+gamenames*
+
 >>>>>>> 8f7b5e3... Initial commit for ortholog repository
 
