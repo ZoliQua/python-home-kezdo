@@ -1,9 +1,9 @@
 
-# This program is part of a series of programs for the Hungarian public lucky game (ötöslottó)
+# This program is part of a series of programs for the Hungarian public lucky game (Keno)
 # This game is a national-wide lottery:
-# 	-- There are 5 draws from 90 numbers (01-90)
-# 	-- There is one draw in each week
-# 	-- Game began in 1957 back in the communist era
+# 	-- There are 20 draws from 80 numbers (01-80)
+# 	-- There is one draw in each day
+# 	-- Game began in 1996
 #	-- We have the data from all the draws.
 #
 #
@@ -19,8 +19,9 @@ import csv
 import sys
 
 # Import all the draws for into a dataframe using pandas
-# Data is located in data/lotto/source/otos.csv
-otos = pd.read_csv("data/lotto/source/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
+# Data is located in data/lotto/source/keno.csv
+keno = pd.read_csv("data/lotto/export/keno_create8.csv", sep=";", index_col=None, usecols=["Nr1", "Nr2", "Nr3", "Nr4", "Nr5", "Nr6", "Nr7", "Nr8", "Nr9", "Nr10",
+																						   "Nr11", "Nr12", "Nr13", "Nr14", "Nr15", "Nr16", "Nr17", "Nr18", "Nr19", "Nr20"])
 
 #
 # Calculate all the options for 2 pairs
@@ -28,14 +29,14 @@ otos = pd.read_csv("data/lotto/source/otos.csv", sep=";", usecols=["Year", "Week
 
 pair2_alloptions = {}
 counter = 0
-for i in range(1, 90):
+for i in range(1, 80):
 	start = i + 1
-	for j in range(start, 91):
+	for j in range(start, 81):
 		option = str(i).zfill(2) + "_" + str(j).zfill(2)
 		pair2_alloptions[option] = 0
 		counter += 1
 
-print(f"Parser have found {counter} 2 pair options between 1-90 numbers.")
+print(f"Parser have found {counter} 2 pair options between 1-80 numbers (Keno).")
 
 #
 # Retrieve and calculate all the occurred options
@@ -43,15 +44,15 @@ print(f"Parser have found {counter} 2 pair options between 1-90 numbers.")
 
 pair2_array = {}
 
-for i in range(1, 5):
+for i in range(1, 20):
 
 	i2 = i + 1
 
-	for j in range(i2, 6):
+	for j in range(i2, 21):
 		this_nr1 = "Nr" + str(i)
 		this_nr2 = "Nr" + str(j)
 
-		this_pair = otos.groupby([this_nr1, this_nr2]).size()
+		this_pair = keno.groupby([this_nr1, this_nr2]).size()
 
 		for iterit in this_pair.iteritems():
 
@@ -69,7 +70,7 @@ sorted_pair2 = sorted(pair2_array.items())
 # print(sorted_pair2)
 # print(pair2_alloptions)
 
-export_filename = "data/lotto/export/otos_pair2_count.tsv"
+export_filename = "data/lotto/export/keno_pair2_count_p1.tsv"
 
 with open(export_filename, mode='w') as export_file:
 	writer = csv.writer(export_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -95,9 +96,9 @@ with open(export_filename, mode='w') as export_file:
 # # Text for the y axis
 # plt.ylabel("Number of occurrences")
 # # Title of the plot
-# plt.title("Otos Lotto Szamok")
+# plt.title("keno Lotto Szamok")
 # # Plotting
-# plt.plot(otos_lotto_szamok_count, "-", label="Counts", linewidth=2, color="orange")
+# plt.plot(keno_lotto_szamok_count, "-", label="Counts", linewidth=2, color="orange")
 # # Create the legend for the figure
 # plt.legend()
 # # Save the file

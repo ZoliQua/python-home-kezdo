@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 # Import dataframe using pandas
-otos = pd.read_csv("data/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
+otos = pd.read_csv("data/lotto/source/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
 
 otos_lotto_szamok = {}
 otos_lotto_szamok_list = []

@@ -19,8 +19,8 @@ import csv
 import sys
 
 # Import all the draws for into a dataframe using pandas
-# Data is located in data/otos.csv
-otos = pd.read_csv("data/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
+# Data is located in data/lotto/source/otos.csv
+otos = pd.read_csv("data/lotto/source/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
 
 #
 # Calculate all the options for 2 pairs
@@ -69,19 +69,23 @@ sorted_pair2 = sorted(pair2_array.items())
 # print(sorted_pair2)
 # print(pair2_alloptions)
 
-export_filename = "data/lotto/otos_pair2_count.tsv"
-counter = 0
+export_filename = "data/lotto/export/otos_pair2_count.tsv"
 
 with open(export_filename, mode='w') as export_file:
-	writer = csv.writer(export_file, delimiter='\t', quotechar='"', quoting = csv.QUOTE_MINIMAL)
+	writer = csv.writer(export_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-	for this_line in sorted_pair2:
+	# for this_line in sorted_pair2:
+	#
+	# 	counter += 1
+	# 	# this_line = str(cells[0]) + "\t" + str(cells[1])
+	# 	writer.writerow(this_line)
 
-		counter += 1
+	for this_line in pair2_alloptions.items():
+
 		# this_line = str(cells[0]) + "\t" + str(cells[1])
 		writer.writerow(this_line)
 
-	print(f"Parser have found {counter} empiric options.")
+	print(f"Parser have found {len(pair2_array)} empiric options.")
 	print(f"Wrote in {export_filename} file.")
 
 
