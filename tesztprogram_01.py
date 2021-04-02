@@ -1,2 +1,0 @@
-import random;
-while int(input('Nyomj 1-est, hogy 6db 1-20 közötti random számot írjak:\n')): print(random.randint(1,20), random.randint(1,20), random.randint(1,20), random.randint(1,20), random.randint(1,20), random.randint(1,20))

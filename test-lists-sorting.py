@@ -1,3 +1,9 @@
+#
+# Test to sort differnt lists in Python
+# Written by Zoltan Dul, DMD, Phd
+# 2021
+#
+
 
 #
 # Testing the sorting of lists
@@ -23,7 +29,6 @@ print(f'Original list: {lst2}')
 #
 
 sorted_lst_reverse = sorted(lst, reverse=True)
-
 print(f'Sorted list (reverse): {sorted_lst_reverse}')
 
 #

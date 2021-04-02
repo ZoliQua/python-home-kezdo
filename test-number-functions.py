@@ -1,23 +1,29 @@
+#
+# Testing the basic number functions of python
+#
+
+# My first python file
+
 szam1 = 14
 szam2 = 12
 
-# összeadás
+# addition - összeadás
 print(szam1+szam2)
-# kivonás
+# subtraction - kivonás
 print(szam1-szam2)
-# szorzás
+# multiplication - szorzás
 print(szam1*szam2)
-# osztás
+# division - osztás
 print(szam1/szam2)
-# egészre osztás
+# division to whole number - egészre osztás
 print(szam1//szam2)
-# hatványozásR
+# exponentiation - hatványozás
 print(szam1**szam2)
-# modulo
+# modulation
 print(szam1%szam2)
 
 """
-OPERATOROK
+OPERATORS
 <
 >
 <=
@@ -27,7 +33,7 @@ OPERATOROK
 """
 
 """
-CIKLUS TESZT
+TEST FOR A CYCLE
 a = 0
 while a <= 10:
     a = a + 1

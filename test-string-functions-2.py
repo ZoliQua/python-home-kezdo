@@ -1,6 +1,7 @@
 #
 # Code in this file is based on a Medium article: https://towardsdatascience.com/working-with-strings-in-python-a-cheat-sheet-e6f462e611f0
 # Implemented and written by Zoltan Dul, DMD, Phd
+# 2021
 #
 
 #

@@ -1,5 +1,5 @@
 
-# This program is part of a series of programs for the Hungarian public lucky game (ötöslottó)
+# This program is part of a series of programs for the Hungarian public lucky game (Ötöslottó) to test Python
 # This game is a national-wide lottery:
 # 	-- There are 5 draws from 90 numbers (01-90)
 # 	-- There is one draw in each week
@@ -9,8 +9,8 @@
 #
 # Written by Zoltan Dul (2021)
 #
-from typing import Dict
 
+from typing import Dict
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -69,6 +69,7 @@ sorted_pair2 = sorted(pair2_array.items())
 # print(sorted_pair2)
 # print(pair2_alloptions)
 
+# Export & print results in an export file
 export_filename = "data/lotto/export/otos_pair2_count.tsv"
 
 with open(export_filename, mode='w') as export_file:
