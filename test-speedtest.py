@@ -1,5 +1,7 @@
 # SOURCE https://python.plainenglish.io/test-internet-connection-speed-using-python-3a1b5a84028
 
+import time
+import random
 import logging as lgg
 from statistics import mean
 
@@ -77,32 +79,51 @@ def main():
             end_num = (choice - 4) * 5
             for i in range(0, end_num):
 
-                speedy = speedtest.Speedtest()
-                print(f'Counting ({i+1})...')
-                lgg.info(f"Speedtest cycle {i+1} / {end_num} starts. ")
+                try:
+                    speedy = speedtest.Speedtest()
+                    print(f'Counting ({i+1})...')
+                    lgg.info(f"Speedtest cycle {i+1} / {end_num} starts. ")
+                except:
+                    lgg.error(f"Speedtest cycle {i + 1} / {end_num} starts. ")
+                try:
+                    local_settings = speedy.config
+                    print(f"Testing from: {local_settings['client']['ip']} ({local_settings['client']['isp']}, {local_settings['client']['country']})")
+                    lgg.info(f"Testing from: {local_settings['client']['ip']} ({local_settings['client']['isp']}, {local_settings['client']['country']})")
+                except:
+                    lgg.error(f"Test info print.")
 
-                local_settings = speedy.config
-                print(f"Testing from: {local_settings['client']['ip']} ({local_settings['client']['isp']}, {local_settings['client']['country']})")
-                lgg.info(f"Testing from: {local_settings['client']['ip']} ({local_settings['client']['isp']}, {local_settings['client']['country']})")
+                try:
+                    best_server = speedy.get_best_server()
+                    print(f"Best server: {best_server['sponsor']} ({best_server['name']}, {best_server['cc']}), Latency: {best_server['latency']}")
+                    lgg.info(f"Best server: {best_server['sponsor']} ({best_server['name']}, {best_server['cc']}), Latency: {best_server['latency']}")
+                except:
+                    lgg.error(f"Test best server.")
 
-                best_server = speedy.get_best_server()
-                print(f"Best server: {best_server['sponsor']} ({best_server['name']}, {best_server['cc']}), Latency: {best_server['latency']}")
-                lgg.info(f"Best server: {best_server['sponsor']} ({best_server['name']}, {best_server['cc']}), Latency: {best_server['latency']}")
+                try:
+                    speed_down = '{:.2f}'.format(speedy.download() / 1024 / 1024)
+                    speed_down_list.append(float(speed_down))
+                    print(f"Download speed: {speed_down} Mb/s")
+                    lgg.info('Download speed has been tested ' + speed_down + " Mb/s")
+                except:
+                    lgg.error(f"Test download speed.")
 
-                speed_down = '{:.2f}'.format(speedy.download() / 1024 / 1024)
-                speed_down_list.append(float(speed_down))
-                print(f"Download speed: {speed_down} Mb/s")
-                lgg.info('Download speed has been tested ' + speed_down + " Mb/s")
+                try:
+                    speed_up = '{:.2f}'.format(speedy.upload() / 1024 / 1024)
+                    speed_up_list.append(float(speed_up))
+                    print(f"Upload speed: {speed_up} Mb/s")
+                    lgg.info('Upload speed has been tested ' + speed_up + " Mb/s")
+                except:
+                    lgg.error(f"Test upload speed.")
 
-                speed_up = '{:.2f}'.format(speedy.upload() / 1024 / 1024)
-                speed_up_list.append(float(speed_up))
-                print(f"Upload speed: {speed_up} Mb/s")
-                lgg.info('Upload speed has been tested ' + speed_up + " Mb/s")
+                if i != (end_num-1):
+                    rnd_int = random.randrange(2, 20)
+                    time.sleep(rnd_int)
+                    print(f"<< wait {rnd_int} seconds before continue >>.")
 
                 del speedy
 
-            print(f"Download speed (mean): {mean(speed_down_list)} Mb/s, Upload speed (mean): {mean(speed_up_list)} Mb/s")
-            lgg.info(f"Download speed (mean): {mean(speed_down_list)} Mb/s, Upload speed (mean): {mean(speed_up_list)} Mb/s")
+            print(f"Download speed (mean): {'{:.2f}'.format(mean(speed_down_list))} Mb/s, Upload speed (mean): {'{:.2f}'.format(mean(speed_up_list))} Mb/s")
+            lgg.info(f"Download speed (mean): {'{:.2f}'.format(mean(speed_down_list))} Mb/s, Upload speed (mean): {'{:.2f}'.format(mean(speed_up_list))} Mb/s")
             break
         elif choice == 7:
             quit()
