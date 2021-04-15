@@ -1,13 +1,14 @@
 # Python program to demonstrate
-# defaultdict
+# defaultdict funcion from collections
 
-
+# Import
 from collections import defaultdict
 
 
 # Function to return a default
 # values for keys that is not
 # present
+
 def def_value():
 	return "Not Present"
 
