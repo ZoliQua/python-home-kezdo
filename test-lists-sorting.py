@@ -1,5 +1,5 @@
 #
-# Test to sort differnt lists in Python
+# Test to sort different lists in Python
 # Written by Zoltan Dul, DMD, Phd
 # 2021
 #
@@ -61,3 +61,31 @@ print(dct.values())
 rnd_list = [1, 2, 3, 1, 1]
 testrr = [index for index, value in enumerate(rnd_list) if value == 1]
 print(testrr)
+
+#
+# Extract  a list in one line into three different variables
+#
+my_list = [1, 2, 3, 4, 5, 6]
+
+a, *b, c = my_list
+
+print("Value a:", a)
+print("Value b:", b)
+print("Value c:", c)
+
+#
+# Merge two different lists into one
+#
+
+my_first_list = [1, 2, 3]
+my_second_list = [4, 5, 6]
+my_merged_list = [*my_first_list, *my_second_list]
+
+print("Merged List:", my_merged_list)
+
+#
+# String to a List
+#
+
+a_list = [*"RealPython"]
+print("A list from string:", a_list)
