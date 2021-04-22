@@ -141,6 +141,7 @@ images/pngImageDir
 data/gamenames
 gamenames*
 data/lotto/export
+data/lastfm*
 
 >>>>>>> 8f7b5e3... Initial commit for ortholog repository
 
