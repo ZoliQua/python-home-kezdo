@@ -142,6 +142,8 @@ data/gamenames
 gamenames*
 data/lotto/export
 data/lastfm*
+~$*
+data/~$book1.xlsx
 
 >>>>>>> 8f7b5e3... Initial commit for ortholog repository
 
