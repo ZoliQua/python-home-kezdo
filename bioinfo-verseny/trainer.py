@@ -49,14 +49,14 @@ if isPrintGeneralStat:
 	print("Row numbers, with adj. chemotherapy only:", rows_ch1_ho0)
 	print("Row numbers, with both therapy:", rows_ch1_ho1)
 
-filtered_dict = {	"Chemo_0_Hormo_0": filtered_ch0_ho0,
-					"Chemo_0_Hormo_1": filtered_ch0_ho1,
-					"Chemo_1_Hormo_0": filtered_ch1_ho0,
-					"Chemo_1_Hormo_1": filtered_ch1_ho1,
-					"Chemo_0": filtered_ch0,
-					"Chemo_1": filtered_ch1,
-					"Hormon_0": filtered_ho0,
-					"Hormon_1": filtered_ho1 }
+filtered_dict = {	"chemo_0_hormo_0": filtered_ch0_ho0,
+					"chemo_0_hormo_1": filtered_ch0_ho1,
+					"chemo_1_hormo_0": filtered_ch1_ho0,
+					"chemo_1_hormo_1": filtered_ch1_ho1,
+					"chemo_0": filtered_ch0,
+					"chemo_1": filtered_ch1,
+					"hormon_0": filtered_ho0,
+					"hormon_1": filtered_ho1 }
 
 #
 # Testing General PFS Chemotherapy/Hormontherapy relation and significance
@@ -88,40 +88,59 @@ if isPrintChiSq:
 # Testing Grading and PFS Chemotherapy / Hormontherapy relation and significance
 #
 
+sub_cond_null = {"col_name": "", "cond_value": ""}
 grader = {"grade": [1, 2, 3]}
-# Grading(filtered_dict)
-GeneralSlicer(filtered_dict, grader)
+# GeneralSlicer(filtered_dict, grader, sub_cond_null, "grade")
+GeneralSlicer(filtered_dict, grader, sub_cond_null)
+
+#
+# Testing Staging and PFS Chemotherapy / Hormontherapy relation and significance
+#
+# Simple
+stager = {"pathologic_stage": ["I", "IA", "IB", "II", "IIA", "IIB", "III", "IIIA", "IIIB", "IIIC", "IV"]}
+GeneralSlicer(filtered_dict, stager, sub_cond_null)
+# Combined
+stager = {"pathologic_stage": [["I", "IA", "IB"], ["II", "IIA", "IIB"], ["III", "IIIA", "IIIB", "IIIC"], "IV"]}
+GeneralSlicer(filtered_dict, stager, sub_cond_null)
+
+#
+# A slicing and analysis based on the tumor size
+#
+
+size_range = [(1, 20), (21, 40), (41, 60), (61, 80), (81, 200)]
+
+for this_range in size_range:
+
+	name = "simple"
+	sub_cond = {"col_name": "size_documented",
+				"cond_value": "between_" + str(this_range[0]).zfill(3) + "_" + str(this_range[1]).zfill(3)}
+	filtered_dict_by_age = {}
+
+	for this_df in filtered_dict.items():
+		filtered_dict_by_age[this_df[0]] = this_df[1][ (this_df[1]["size_documented"] >= this_range[0]) & (this_df[1]["size_documented"] <= this_range[1]) ]
+
+	GeneralSlicer(filtered_dict_by_age, grader, sub_cond, name, "a")
+
 
 #
 # Age slicing
 #
-# age_range = [(1, 40), (41, 55), (56, 70), (71, 100)]
+# age_range = from 1 to 50, from 51 to 65, from 66 to 100
+#
 age_range = [(1, 50), (51, 65), (66, 100)]
 
 for this_range in age_range:
 
-	name = "age_" + str(this_range[0]).zfill(2) + "_" + str(this_range[1]).zfill(2)
+	name = "simple"
+	sub_cond = {"col_name": "age_at_diagnosis",
+				"cond_value": "between_" + str(this_range[0]).zfill(3) + "_" + str(this_range[1]).zfill(3)}
+
 	filtered_dict_by_age = {}
 
 	for this_df in filtered_dict.items():
 		filtered_dict_by_age[this_df[0]] = this_df[1][ (this_df[1]["age_at_diagnosis"] >= this_range[0]) & (this_df[1]["age_at_diagnosis"] <= this_range[1]) ]
 
-	GeneralSlicer(filtered_dict_by_age, grader, name)
+	GeneralSlicer(filtered_dict_by_age, grader, sub_cond, name, "a")
 
-# Staging filtering out
-stager = {"pathologic_stage": ["I", "IA", "IB", "II", "IIA", "IIB", "III", "IIIA", "IIIB", "IIIC", "IV"]}
-GeneralSlicer(filtered_dict, stager, "stage_simple")
-
-stager = {"pathologic_stage": [["I", "IA", "IB"], ["II", "IIA", "IIB"], ["III", "IIIA", "IIIB", "IIIC"], "IV"]}
-GeneralSlicer(filtered_dict, stager, "stage_combined")
-
-# filtered_by_age = df[(df['age_at_diagnosis']>=99 ) & (df['closing_price']<=101)]
-
-
-# for this_df in filtered_dict.items():
-# 	filtered_pfs1 = this_df[1].loc[this_df[1]['PFS_event'] == 1]
-# 	print(f"{this_df[0]} =>\tRows: {len(filtered_pfs1.index)}\tAverage (mean): {'{:.4f}'.format(filtered_pfs1['PFS_time_months'].mean())} ")
-
-# filtered.to_csv("data/train_export.csv", index=False)
 
 

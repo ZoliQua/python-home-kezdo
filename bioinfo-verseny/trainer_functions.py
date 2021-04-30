@@ -1,5 +1,7 @@
 
 import pandas as pd
+import os.path
+from os import path
 from scipy.stats import chi2_contingency
 from statistics import stdev
 
@@ -45,10 +47,18 @@ def ChiSqTest(retrieve_chi2):
 		return 100
 
 
-def GeneralSlicer(incoming_filtered_dict, conditions, call_type="simple"):
+def GeneralSlicer(incoming_filtered_dict, conditions, sub_conditions, call_type="simple", write_mode="a"):
 	collecing_dict = {}
 	collecting_array = []
 	filtered_dict = {}
+
+	# Export file to a csv
+	if call_type == "simple":
+		filename = "data/train_statistics.csv"
+	else:
+		filename = "data/train_statistics_" + call_type + ".csv"
+
+	isExportFileExist = path.exists(filename)
 
 	for this_df in incoming_filtered_dict.items():
 
@@ -66,10 +76,14 @@ def GeneralSlicer(incoming_filtered_dict, conditions, call_type="simple"):
 
 					filtered_dict[col_name][condition_value] = {}
 
-					for item in condition_list:
+					connecting_subset_dfs = []
 
+					for this_cond_val in condition_list:
+						connecting_subset_dfs.append(this_df[1].loc[this_df[1][col_name] == this_cond_val])
 
-					filtered_dict[col_name][condition_value]["base"] = this_df[1][
+					filtered_dict[col_name][condition_value]["base"] = pd.concat(connecting_subset_dfs)
+
+					# filtered_dict[col_name][condition_value]["base"] = this_df[1][
 					#	this_df[1][col_name].str.contains(condition_value, case=False, na=False)]
 					#	this_df[1][col_name].str.find(condition_value) != -1]
 
@@ -124,6 +138,8 @@ def GeneralSlicer(incoming_filtered_dict, conditions, call_type="simple"):
 					this_df[0],
 					col_name,
 					condition_value,
+					sub_conditions["col_name"],
+					sub_conditions["cond_value"],
 					len(filtered_dict[col_name][condition_value]["pfs_0"].index),
 					'{:.2f}'.format(filtered_dict[col_name][condition_value]["pfs_0"]['PFS_time_months'].mean()),
 					'{:.2f}'.format(filtered_dict[col_name][condition_value]["pfs_0"]['PFS_time_months'].std()),
@@ -142,7 +158,7 @@ def GeneralSlicer(incoming_filtered_dict, conditions, call_type="simple"):
 				collecting_array.append(this_row)
 
 	export_df = pd.DataFrame(data=collecting_array)
-	export_df.columns = ["type", "condition_type", "condition_value", "pfs_0", "pfs_0_months_mean", "pfs_0_months_std", "pfs_1", "pfs_1_months_mean",
+	export_df.columns = ["type", "main_condition", "condition_value", "sub_condition", "sub_condition_value", "pfs_0", "pfs_0_months_mean", "pfs_0_months_std", "pfs_1", "pfs_1_months_mean",
 						 "pfs_1_months_std", "pfs_1_perc", "dss_0", "dss_0_months_mean", "dss_0_months_std", "dss_1", "dss_1_months_mean",
 						 "dss_1_months_std", "dss_1_perc"]
 
@@ -353,30 +369,38 @@ def GeneralSlicer(incoming_filtered_dict, conditions, call_type="simple"):
 
 	# Filtering export_df to determine, whether there is any significance of the row
 	add_new_column_5 = []
+	add_new_column_6 = []
 	filtered_export_df = export_df[
 		(export_df["proportion_val_1_pfs"] < 0.9) & (export_df["proportion_val_1_pfs_chi2_p"] < 0.05)]
 
 	if len(filtered_export_df) > 0:
 		for row in export_df.iterrows():
 			this_row = []
+			this_value = 0
 			if row[1]["proportion_val_1_pfs"] < 0.9 and row[1]["proportion_val_1_pfs_chi2_p"] < 0.05:
 				this_row.append("PFS (p<0.05)")
+				this_value = 1
 			if row[1]["proportion_val_2_pfs"] < 0.9 and row[1]["proportion_val_2_pfs_chi2_p"] < 0.05:
 				this_row.append("PFS 2nd (p<0.05)")
+				this_value = 1
 			if row[1]["proportion_val_1_dds"] < 0.9 and row[1]["proportion_val_1_dds_chi2_p"] < 0.05:
 				this_row.append("DDS (p<0.05)")
+				this_value = 1
 			if row[1]["proportion_val_2_dds"] < 0.9 and row[1]["proportion_val_2_dds_chi2_p"] < 0.05:
 				this_row.append("DDS (p<0.05)")
+				this_value = 1
 			this_row_str = ", ".join(this_row)
 
 			add_new_column_5.append(this_row_str)
-		export_df["significance"] = add_new_column_5
+			add_new_column_6.append(this_value)
 
-	# Export file to a csv
-	if call_type == "simple":
-		filename = "data/train_grading_simple.csv"
+		export_df["significance_level"] = add_new_column_5
+		export_df["significance"] = add_new_column_6
+
+	# Write export file inta a csv file using pandas export "to_csv" function
+	if not isExportFileExist:
+		export_df.to_csv(filename, index=False, mode=write_mode)
 	else:
-		filename = "data/train_grading_" + call_type + ".csv"
+		export_df.to_csv(filename, index=False, header=False, mode=write_mode)
 
-	export_df.to_csv(filename, index=False)
 
