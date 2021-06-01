@@ -32,6 +32,8 @@ sheet_1.add_chart(chart, 'e2')
 
 workbook.save('data/Book1-export.xlsx')
 
+# Another example source: https://python.plainenglish.io/how-to-read-and-write-excel-files-in-python-3da9825e4955
+
 ######## Extract chart image from Excel workbook ########
 
 # input_file = "data/Book1.xlsx"
