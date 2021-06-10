@@ -1,4 +1,4 @@
-anaconda-client==1.7.2
+anaconda-client==1.8.0
 anaconda-navigator==1.10.0
 seaborn==0.11.1
 matplotlib=3.3.4
