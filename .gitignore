@@ -145,5 +145,9 @@ data/lastfm*
 ~$*
 data/~$book1.xlsx
 
+# sample image files
+images/idenprof
+idenprof-jpg.zip
+
 >>>>>>> 8f7b5e3... Initial commit for ortholog repository
 
