@@ -49,3 +49,5 @@ print(f"Is setD a subset of setA?: {result7}.")
 # See if set B is a subset of set A
 result8 = B.issubset(A)
 print(f"Is setB a subset of setA?: {result8}.")
+
+# Additional source and test: https://python.plainenglish.io/dont-always-use-lists-in-python-406554341415
