@@ -13,7 +13,7 @@ tomb2 = ['nem']
 print(tomb[-1])
 
 # Slicing (minus the first element)
-print(tombom[1:])
+print(tomb[1:])
 
 # Multi dimension list
 tartomany = range(100)
