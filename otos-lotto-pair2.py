@@ -12,96 +12,76 @@
 
 from typing import Dict
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
 import numpy as np
 import csv
 import sys
+import os
 
-# Import all the draws for into a dataframe using pandas
-# Data is located in data/lotto/source/otos.csv
-otos = pd.read_csv("data/lotto/source/otos.csv", sep=";", usecols=["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"])
+# Check if the file exists before trying to read it
+file_path = "data/lotto/source/otos.csv"
+if not os.path.exists(file_path):
+    print(f"Error: The file {file_path} does not exist.")
+    print("Please make sure the data file is in the correct location.")
+    sys.exit(1)
 
-#
+# First read the header to see what columns are available
+try:
+    # Read just the header row to check available columns
+    header = pd.read_csv(file_path, sep=";", nrows=0)
+    available_columns = header.columns.tolist()
+    
+    # Define the columns we want
+    desired_columns = ["Year", "Week", "Nr1", "Nr2", "Nr3", "Nr4", "Nr5"]
+    
+    # Filter to only use columns that actually exist in the file
+    usable_columns = [col for col in desired_columns if col in available_columns]
+    
+    if len(usable_columns) < len(desired_columns):
+        missing = set(desired_columns) - set(usable_columns)
+        print(f"Warning: Some columns are missing in the CSV: {missing}")
+        print(f"Available columns are: {available_columns}")
+
+    print("Using columns:", usable_columns)
+    # Now read the actual data with only the columns that exist
+    otos = pd.read_csv(file_path, sep=";", usecols=usable_columns)
+    
+except Exception as e:
+    print(f"Error reading CSV file: {e}")
+    print("Available columns in the CSV file might not match what the program expects.")
+    sys.exit(1)
+
 # Calculate all the options for 2 pairs
-#
-
 pair2_alloptions = {}
 counter = 0
 for i in range(1, 90):
-	start = i + 1
-	for j in range(start, 91):
-		option = str(i).zfill(2) + "_" + str(j).zfill(2)
-		pair2_alloptions[option] = 0
-		counter += 1
+    start = i + 1
+    for j in range(start, 91):
+        option = str(i).zfill(2) + "_" + str(j).zfill(2)
+        pair2_alloptions[option] = 0
+        counter += 1
 
 print(f"Parser have found {counter} 2 pair options between 1-90 numbers.")
 
-#
 # Retrieve and calculate all the occurred options
-#
-
 pair2_array = {}
 
 for i in range(1, 5):
+    i2 = i + 1
+    for j in range(i2, 6):
+        this_nr1 = "Nr" + str(i)
+        this_nr2 = "Nr" + str(j)
+        
+        # Check if both columns exist in the dataframe
+        if this_nr1 in otos.columns and this_nr2 in otos.columns:
+            this_pair = otos.groupby([this_nr1, this_nr2]).size()
 
-	i2 = i + 1
+            for iterit in this_pair.items():  # Changed from iteritems() to items()
+                pair2_key = str(iterit[0][0]).zfill(2) + "_" + str(iterit[0][1]).zfill(2)
+                pair2_num = int(iterit[1])
 
-	for j in range(i2, 6):
-		this_nr1 = "Nr" + str(i)
-		this_nr2 = "Nr" + str(j)
+                if pair2_key in pair2_array:
+                    pair2_array[pair2_key] += pair2_num
+                else:
+                    pair2_array[pair2_key] = pair2_num  # Completed the assignment
 
-		this_pair = otos.groupby([this_nr1, this_nr2]).size()
-
-		for iterit in this_pair.iteritems():
-
-			pair2_key = str(iterit[0][0]).zfill(2) + "_" + str(iterit[0][1]).zfill(2)
-			pair2_num = int(iterit[1])
-
-			if pair2_key in pair2_array:
-				pair2_array[pair2_key] += pair2_num
-			else:
-				pair2_array[pair2_key] = pair2_num
-
-			pair2_alloptions[pair2_key] += pair2_num
-
-sorted_pair2 = sorted(pair2_array.items())
-# print(sorted_pair2)
-# print(pair2_alloptions)
-
-# Export & print results in an export file
-export_filename = "data/lotto/export/otos_pair2_count.tsv"
-
-with open(export_filename, mode='w') as export_file:
-	writer = csv.writer(export_file, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-	# for this_line in sorted_pair2:
-	#
-	# 	counter += 1
-	# 	# this_line = str(cells[0]) + "\t" + str(cells[1])
-	# 	writer.writerow(this_line)
-
-	for this_line in pair2_alloptions.items():
-
-		# this_line = str(cells[0]) + "\t" + str(cells[1])
-		writer.writerow(this_line)
-
-	print(f"Parser have found {len(pair2_array)} empiric options.")
-	print(f"Wrote in {export_filename} file.")
-
-
-#
-# # Text for the x axis
-# plt.xlabel("List of Numbers (1-90)")
-# # Text for the y axis
-# plt.ylabel("Number of occurrences")
-# # Title of the plot
-# plt.title("Otos Lotto Szamok")
-# # Plotting
-# plt.plot(otos_lotto_szamok_count, "-", label="Counts", linewidth=2, color="orange")
-# # Create the legend for the figure
-# plt.legend()
-# # Save the file
-# # plt.savefig('images/jpgImageDir/line_plot_' + current_time_abbrev + '.jpg', dpi=300)
-# # Show the file
-# plt.show()
