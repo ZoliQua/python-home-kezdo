@@ -85,3 +85,5 @@ for i in range(1, 5):
                 else:
                     pair2_array[pair2_key] = pair2_num  # Completed the assignment
 
+print(pair2_array)
+
