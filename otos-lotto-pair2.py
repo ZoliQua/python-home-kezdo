@@ -93,3 +93,8 @@ sorted_pairs = sorted(pair2_array.items(), key=lambda x: x[1], reverse=True)
 for i, (pair, count) in enumerate(sorted_pairs[:10], 1):
     print(f"{i:2d}. {pair} : {count} times")
 
+# Show bottom 20 least frequent pairs
+print("\nBottom 20 least frequent pairs:")
+for i, (pair, count) in enumerate(sorted_pairs[-20:], 1):
+    print(f"{i:2d}. {pair} : {count} times")
+
