@@ -87,7 +87,6 @@ for i in range(1, 5):
 
 print(pair2_array)
 
-
 # Show top 10 most frequent pairs
 print("\nTop 10 most frequent pairs:")
 sorted_pairs = sorted(pair2_array.items(), key=lambda x: x[1], reverse=True)
