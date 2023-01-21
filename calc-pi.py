@@ -1,5 +1,6 @@
 # Leibniz formula for π
 # Initialize variables
+
 pi = 0
 number_of_iterations = 100000  # The more iterations, the more accurate the value of pi.
 
