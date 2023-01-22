@@ -1,4 +1,5 @@
 # Create a precise "Crack the Code" poster that exactly matches the user's specification.
+
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 
