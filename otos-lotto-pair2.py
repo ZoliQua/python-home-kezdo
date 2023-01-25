@@ -99,3 +99,16 @@ print("\nBottom 20 least frequent pairs:")
 for i, (pair, count) in enumerate(sorted_pairs[-20:], 1):
     print(f"{i:2d}. {pair} : {count} times")
 
+# Check for pairs that never occurred (counter = 0)
+zero_count_pairs = []
+for option in pair2_alloptions:
+    if option not in pair2_array:
+        zero_count_pairs.append(option)
+
+if zero_count_pairs:
+    print(f"\nFound {len(zero_count_pairs)} pairs that never occurred:")
+    for pair in zero_count_pairs:
+        print(f"  {pair} : 0 times")
+else:
+    print("\nAll possible pairs have occurred at least once.")
+
