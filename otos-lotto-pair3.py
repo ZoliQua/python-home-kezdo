@@ -98,3 +98,16 @@ for i, (triplet, count) in enumerate(sorted_triplets[:10], 1):
 print("\nBottom 20 least frequent triplets:")
 for i, (triplet, count) in enumerate(sorted_triplets[-20:], 1):
     print(f"{i:2d}. {triplet} : {count} times")
+
+# Check for triplets that never occurred (counter = 0)
+zero_count_triplets = []
+for option in pair3_alloptions:
+    if option not in pair3_array:
+        zero_count_triplets.append(option)
+
+if zero_count_triplets:
+    print(f"\nFound {len(zero_count_triplets)} triplets that never occurred:")
+    for triplet in zero_count_triplets:
+        print(f"  {triplet} : 0 times")
+else:
+    print("\nAll possible triplets have occurred at least once.")
