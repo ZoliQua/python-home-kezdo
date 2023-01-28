@@ -1,4 +1,6 @@
-
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 # Test to use argparse lib
 #
 
