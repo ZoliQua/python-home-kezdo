@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 # Based on Medium article
 # URL: https://towardsdatascience.com/functools-an-underrated-python-package-405bbef2dd46
 
