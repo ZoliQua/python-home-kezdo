@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 # synthetic classification dataset
 from numpy import where
 from sklearn.datasets import make_classification
