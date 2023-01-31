@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
