@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 # affinity propagation clustering
 from numpy import unique
 from numpy import where
