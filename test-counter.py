@@ -1,3 +1,7 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
+
 import time
 from datetime import datetime
 
