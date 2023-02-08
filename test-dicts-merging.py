@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 
 # SORUCE: https://medium.com/techtofreedom/7-ways-to-merge-dictionaries-in-python-6d6e6f191ae8
 
