@@ -1,3 +1,6 @@
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 import openpyxl as xl
 from openpyxl.chart import LineChart, Reference
 
