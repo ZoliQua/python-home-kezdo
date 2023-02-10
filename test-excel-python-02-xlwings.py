@@ -1,4 +1,6 @@
-
+# Python Test Project File
+# Written by Zoltan Dul (2021)
+#
 import xlwings as xw
 import pandas as pd
 import datetime as dt
