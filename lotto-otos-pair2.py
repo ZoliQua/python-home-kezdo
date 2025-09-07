@@ -14,8 +14,6 @@
 from typing import Dict
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
-import csv
 import sys
 import os
 

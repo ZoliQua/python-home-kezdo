@@ -86,15 +86,15 @@ for i in range(1, 4):  # Changed from 5 to 4 to allow for triplets
                     else:
                         pair3_array[pair3_key] = pair3_num
 
-print(pair3_array)
+# print(pair3_array)
 
-# Show top 10 most frequent triplets
+# Show the top 10 most frequent triplets
 print("\nTop 10 most frequent triplets:")
 sorted_triplets = sorted(pair3_array.items(), key=lambda x: x[1], reverse=True)
 for i, (triplet, count) in enumerate(sorted_triplets[:10], 1):
     print(f"{i:2d}. {triplet} : {count} times")
 
-# Show bottom 20 least frequent triplets
+# Show the bottom 20 least frequent triplets
 print("\nBottom 20 least frequent triplets:")
 for i, (triplet, count) in enumerate(sorted_triplets[-20:], 1):
     print(f"{i:2d}. {triplet} : {count} times")
@@ -107,7 +107,7 @@ for option in pair3_alloptions:
 
 if zero_count_triplets:
     print(f"\nFound {len(zero_count_triplets)} triplets that never occurred:")
-    for triplet in zero_count_triplets:
-        print(f"  {triplet} : 0 times")
+    # for triplet in zero_count_triplets:
+    #    print(f"  {triplet} : 0 times")
 else:
     print("\nAll possible triplets have occurred at least once.")

@@ -17,6 +17,7 @@ for i in range(1, 6):
 	name_of_this_nr = "Nr" + str(i)
 
 	this_nr = otos.sort_values(by=[name_of_this_nr]).filter(items=[name_of_this_nr]).value_counts()
+	#print(this_nr)
 
 	j = 0
 	for element in this_nr.index:
@@ -40,7 +41,7 @@ for i in range(1, 91):
 d = {"Nrs": otos_lotto_szamok_list, "Count": otos_lotto_szamok_count}
 otos_sum = pd.DataFrame(data=d)
 
-print(otos_sum)
+print(otos_sum.sort_values(by=["Count"], ascending=False).iloc[:10])
 
 # Text for the x axis
 plt.xlabel("List of Numbers (1-90)")
